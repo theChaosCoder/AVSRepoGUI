@@ -20,72 +20,9 @@ namespace AVSRepoGUI
             this.python_bin = pythonbin;
         }
 
-
-        /// <summary>
-        /// Result [["continuity.dll", "Plugin load failed, namespace edgefixer already populated (D:\\xy\\plugins64\\continuity.dll)"], 
-        ///         ["cublas64_80.dll", "No entry point found in D:\\xy\\plugins64\\cublas64_80.dll"], ... ]]
-        /// </summary>
-        /// <param name="path"></param>
-        /// <returns></returns>
-        public async Task<Dictionary<string, List<string>>> CheckPluginsAsync(string path)
-        {
-            Dictionary<string, List<string>> dllfiles = new Dictionary<string, List<string>>();
-            string code = GetDllCheckCode(path);
-            string result = await Task.Run(() => run_python(code));
-            Console.WriteLine(result);
-            string[][] packages;
-            try
-            {
-                packages = JsonConvert.DeserializeObject<string[][]>(result);
-                if (packages == null)
-                    return null;
-            }
-            catch
-            {
-                return null;
-            }
-            dllfiles.Add("no_problems", (from file in packages
-                                         where file[1].Contains("already loaded")
-                                         select Path.Combine(path, file[0])).OrderBy(f => f).ToList());
-
-            dllfiles.Add("not_a_vsplugin", (from file in packages
-                                            where file[1].Contains("No entry point found")
-                                            select Path.Combine(path, file[0])).OrderBy(f => f).ToList());
-
-            dllfiles.Add("wrong_arch", (from file in packages
-                                        where file[1].Contains("returned 193")
-                                        select Path.Combine(path, file[0])).OrderBy(f => f).ToList());
-            
-            dllfiles.Add("incompatible_dependency", (from file in packages
-                                        where file[1].Contains("returned 127")
-                                        select Path.Combine(path, file[0])).OrderBy(f => f).ToList());
-
-            dllfiles.Add("missing_dependency", (from file in packages
-                                        where file[1].Contains("returned 126")
-                                        select Path.Combine(path, file[0])).OrderBy(f => f).ToList());
-
-            dllfiles.Add("namespace", (from file in packages
-                                        where file[1].Contains("already populated")
-                                        select Path.Combine(path, file[0])).OrderBy(f => f).ToList());
-            
-            dllfiles.Add("others", (from file in packages
-                                    where !(file[1].Contains("returned 193") || file[1].Contains("No entry point found") || file[1].Contains("already loaded") || file[1].Contains("returned 126") || file[1].Contains("returned 127") || file[1].Contains("already populated"))
-                                    select Path.Combine(path, file[0])).OrderBy(f => f).ToList());
-            return dllfiles;
-        }
-
         public async Task<string> GetVapoursynthVersion()
         {
             return await Task.Run(() => run_python("import vapoursynth as vs; core = vs.get_core(); print(core.version())"));
-        }
-
-
-        public async Task<string> GetLoadedVapoursynthDll()
-        {
-            var result = await Task.Run(() => run_python("import vapoursynth; print(vapoursynth.__file__)").Trim());
-            if (String.IsNullOrEmpty(result))
-                return null;
-            return result.Split('.')[0] + ".dll";
         }
 
 

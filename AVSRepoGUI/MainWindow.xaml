@@ -74,10 +74,8 @@
                     <TextBlock Visibility="Collapsed" Margin="0,2,10,0" IsEnabled="{Binding IsNotWorking}"><Hyperlink Click="Hyperlink_Click_1">Paths</Hyperlink></TextBlock>
                     <TextBlock Margin="0,2,10,0" ToolTip="{ Binding CurrentPluginPath}"><Hyperlink Click="Hyperlink_Click_Plugins">PLUGINS</Hyperlink></TextBlock>
                     <TextBlock Margin="0,2,10,0" ToolTip="{ Binding CurrentScriptPath}"><Hyperlink Click="Hyperlink_Click_Scripts">SCRIPTS</Hyperlink></TextBlock>
-                    <TextBlock Margin="0,2,10,0"><Hyperlink NavigateUri="http://vsdb.top" RequestNavigate="Hyperlink_open">VS Database</Hyperlink></TextBlock>
-                    <TextBlock Name="Link_vsdoom9" Margin="0,2,10,0"><Hyperlink NavigateUri="https://forum.doom9.org/showthread.php?t=175590" RequestNavigate="Hyperlink_open">VSRepo Doom9</Hyperlink></TextBlock>
-                    <TextBlock Name="Link_avsdoom9" Visibility="Collapsed" Margin="0,2,10,0"><Hyperlink NavigateUri="https://forum.doom9.org/showthread.php?t=175822" RequestNavigate="Hyperlink_open">AVSRepo Doom9</Hyperlink></TextBlock>
-                    <TextBlock Margin="0,2,10,0"><Hyperlink NavigateUri="https://forum.doom9.org/showthread.php?t=176313" RequestNavigate="Hyperlink_open">About</Hyperlink></TextBlock>
+                    <TextBlock Name="Link_avsdoom9" Margin="0,2,10,0"><Hyperlink NavigateUri="https://forum.doom9.org/showthread.php?t=175822" RequestNavigate="Hyperlink_open">AVSRepo</Hyperlink></TextBlock>
+                    <TextBlock Margin="0,2,10,0"><Hyperlink NavigateUri="https://forum.doom9.org/showthread.php?t=176443" RequestNavigate="Hyperlink_open">AVSRepoGUI</Hyperlink></TextBlock>
                 </StackPanel>
 
                 <TextBox x:Name="ConsoleBox" Visibility="Collapsed" Text="{Binding consolestd, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:MainWindow}}}" Margin="480,5,0,0" Height="72" BorderThickness="0"></TextBox>

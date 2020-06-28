@@ -185,12 +185,7 @@ namespace AVSRepoGUI
             try
             {
                 Plugins.All = LoadLocalVspackage();
-                //Check OnStart online for new definitions.
-                DateTime dt = File.GetLastWriteTime(vspackages_file);
-                if (dt < dt.AddDays(1))
-                {
-                    avsrepo.Update();
-                }
+                avsrepo.Update();
             }
             catch
             {
