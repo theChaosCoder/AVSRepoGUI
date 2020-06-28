@@ -135,13 +135,9 @@ namespace AVSRepoGUI
 
         private void InitAvisynth()
         {
-            ImageHeader.Source = new BitmapImage(new Uri("pack://application:,,,/Resources/avsrepo_logo.png"));
-            Link_avsdoom9.Visibility = Visibility.Visible;
-            Link_vsdoom9.Visibility = Visibility.Collapsed;
-
             avsrepo.SetPortableMode(true); // avsrepo should always be called with -p since it doesn't know anything about avisynth plugin folders
             var settings = new PortableSettings().LoadLocalFile("avsrepogui.json");
-            var avsrepo_file = "avsrepo.exe";
+
             if (File.Exists(avsrepo_file))
             {
                 avsrepo.python_bin = avsrepo_file;

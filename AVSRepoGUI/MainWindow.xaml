@@ -83,7 +83,7 @@
                 <TextBox x:Name="ConsoleBox" Visibility="Collapsed" Text="{Binding consolestd, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:MainWindow}}}" Margin="480,5,0,0" Height="72" BorderThickness="0"></TextBox>
             </StackPanel>
 
-            <Image Grid.RowSpan="3" Name="ImageHeader" Source="pack://application:,,,/Resources/vsrepo_logo.png" Stretch="None" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,0,0,-1" Height="139" Width="430"></Image>
+            <Image Grid.RowSpan="3" Name="ImageHeader" Source="pack://application:,,,/Resources/avsrepo_logo.png" Stretch="None" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,0,0,-1" Height="139" Width="430"></Image>
             <Label x:Name="LabelPortable" Grid.RowSpan="2" Visibility="Hidden" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="133,0,0,23" Grid.Row="1" Foreground="#DDE63F00">
                 <Label.Effect>
                     <DropShadowEffect ShadowDepth="0" BlurRadius="10" Opacity="0.6"/>

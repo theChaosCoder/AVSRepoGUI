@@ -59,15 +59,5 @@ namespace AVSRepoGUI.Properties {
                 resourceCulture = value;
             }
         }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
-        /// </summary>
-        public static System.Drawing.Bitmap vsrepo_logo {
-            get {
-                object obj = ResourceManager.GetObject("vsrepo_logo", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
     }
 }
