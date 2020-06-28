@@ -511,7 +511,7 @@ namespace AVSRepoGUI
         private void Hyperlink_namespace(object sender, System.Windows.Navigation.RequestNavigateEventArgs e)
         {
             var package = (Package)(sender as Hyperlink).DataContext;
-            Process.Start("https://github.com/theChaosCoder/avsrepo/tree/master/local/" + (package.Namespace ?? package.Modulename) + ".json");
+            Process.Start("https://github.com/theChaosCoder/avsrepo/tree/master/packages/" + (package.Namespace ?? package.Modulename) + ".json");
         }
 
         private void Hyperlink_Click_Plugins(object sender, RoutedEventArgs e)
