@@ -138,15 +138,24 @@ namespace AVSRepoGUI
             avsrepo.SetPortableMode(true); // avsrepo should always be called with -p since it doesn't know anything about avisynth plugin folders
             var settings = new PortableSettings().LoadLocalFile("avsrepogui.json");
 
-            if (File.Exists(avsrepo_file))
+            var avsrepo_files = new string[] { "avsrepo.exe", "avsrepo-32.exe", "avsrepo-64.exe" };
+            var found_avrespo_bin = false;
+
+            foreach (var avs_file in avsrepo_files)
             {
-                avsrepo.python_bin = avsrepo_file;
+                if (File.Exists(avs_file))
+                {
+                    avsrepo.python_bin = avs_file;
+                    found_avrespo_bin = true;
+                }
             }
-            else
+
+            if (!found_avrespo_bin)
             {
-                MessageBox.Show("Can't find avsrepo.exe");
+                MessageBox.Show("Can't find avsrepo.exe, avsrepo-32.exe or avsrepo-64.exe");
                 System.Environment.Exit(1);
             }
+
 
             if (settings is null)
             {
