@@ -8,4 +8,4 @@ You need the AVSRepo binary. Put it in the same folder as the AVSRepoGUI binary
 - AVSRepo https://forum.doom9.org/showthread.php?t=175822
 - AVSRepoGUI https://forum.doom9.org/showthread.php?t=176443
 
-![AVSRepoGUI](https://i.imgur.com/OA37k7H.png)
+![AVSRepoGUI](https://i.imgur.com/ZujVHPX.png)
