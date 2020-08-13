@@ -152,6 +152,7 @@ namespace AVSRepoGUI
                     FileName = python_bin,
                     Arguments = args,
                     RedirectStandardOutput = true,
+                    RedirectStandardError = true,
                     UseShellExecute = false,
                     CreateNoWindow = true,
                 }
