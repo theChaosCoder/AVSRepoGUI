@@ -24,7 +24,7 @@ namespace AVSRepoGUI
     ///
     public partial class MainWindow : Window, INotifyPropertyChanged
     {
-        public string vspackages_file; // = @"..\avspackages.json";
+        public string avspackages_file; // = @"..\avspackages.json";
         public AvsPlugins Plugins { get; set; }
         public Dictionary<string, string> plugins_dll_parents = new Dictionary<string, string>();
         public AvsApi avsrepo;
@@ -161,14 +161,14 @@ namespace AVSRepoGUI
             {
                 AppIsWorking(true);
                 avsrepo.SetArch(Environment.Is64BitOperatingSystem);
-                vspackages_file = Path.GetDirectoryName(Process.GetCurrentProcess().MainModule.FileName) + "\\avspackages.json"; // That means avsrepo.exe needs to be near avsrepogui
+                avspackages_file = Path.GetDirectoryName(Process.GetCurrentProcess().MainModule.FileName) + "\\avspackages.json"; // That means avsrepo.exe needs to be near avsrepogui
                 if (Avs32Paths != null)
                 {
-                    avsrepo.SetPaths(false, new Paths() { Binaries = Avs32Paths.Plugin, Scripts = Avs32Paths.Script, Definitions = vspackages_file });
+                    avsrepo.SetPaths(false, new Paths() { Binaries = Avs32Paths.Plugin, Scripts = Avs32Paths.Script, Definitions = avspackages_file });
                 }
                 if(Avs64Paths != null)
                 {
-                    avsrepo.SetPaths(true, new Paths() { Binaries = Avs64Paths.Plugin, Scripts = Avs64Paths.Script, Definitions = vspackages_file });
+                    avsrepo.SetPaths(true, new Paths() { Binaries = Avs64Paths.Plugin, Scripts = Avs64Paths.Script, Definitions = avspackages_file });
                 }
                 //Trigger GetPaths for 32/64 bit, they are cached in VsApi class anyway
                 _ = avsrepo.GetPaths(true).Definitions; _ = avsrepo.GetPaths(false).Definitions;
@@ -181,11 +181,11 @@ namespace AVSRepoGUI
                 LabelPortable.Visibility = Visibility.Visible;
                 avsrepo.SetPortableMode(true);
                 avsrepo.python_bin = settings.Bin;
-                vspackages_file = Path.GetDirectoryName(settings.Bin) + "\\avspackages.json";
+                avspackages_file = Path.GetDirectoryName(settings.Bin) + "\\avspackages.json";
 
                 // Set paths manually and DONT trigger Win64 onPropertyChanged yet
-                avsrepo.SetPaths(true, new Paths() { Binaries = settings.Win64.Binaries, Scripts = settings.Win64.Scripts, Definitions = vspackages_file });
-                avsrepo.SetPaths(false, new Paths() { Binaries = settings.Win32.Binaries, Scripts = settings.Win32.Scripts, Definitions = vspackages_file });
+                avsrepo.SetPaths(true, new Paths() { Binaries = settings.Win64.Binaries, Scripts = settings.Win64.Scripts, Definitions = avspackages_file });
+                avsrepo.SetPaths(false, new Paths() { Binaries = settings.Win32.Binaries, Scripts = settings.Win32.Scripts, Definitions = avspackages_file });
 
                 // Triggering  Win64 is now safe
                 //Win64 = Environment.Is64BitOperatingSystem;
@@ -193,7 +193,7 @@ namespace AVSRepoGUI
             
             try
             {
-                Plugins.All = LoadLocalVspackage();
+                Plugins.All = LoadLocalAvspackage();
                 avsrepo.Update();
             }
             catch
@@ -261,15 +261,15 @@ namespace AVSRepoGUI
             //ConsoleBox.Text =  s.consolestd + "\n";
         }
 
-        private Package[] LoadLocalVspackage()
+        private Package[] LoadLocalAvspackage()
         {
-            if (!File.Exists(vspackages_file))
+            if (!File.Exists(avspackages_file))
             {
                 avsrepo.Update();
             }
 
             //Load vspackages.json
-            var jsonString = File.ReadAllText(vspackages_file);
+            var jsonString = File.ReadAllText(avspackages_file);
             var packages = AvsPackage.FromJson(jsonString);
             //var packages = JsonConvert.DeserializeObject<Vspackage>(jsonString);
             //return (packages.FileFormat, packages.Packages);
@@ -314,7 +314,7 @@ namespace AVSRepoGUI
 
         private async Task ReloadPluginsAsync()
         {
-            var _plugins = LoadLocalVspackage();
+            var _plugins = LoadLocalAvspackage();
             if(Win64)
                 _plugins = Array.FindAll(_plugins, c => c.Releases[0].Win64 != null || c.Releases[0].Script != null);
             else
@@ -584,11 +584,11 @@ namespace AVSRepoGUI
                     Avs64Paths = wizardDialog.Path64;
                     if (Avs32Paths != null)
                     {
-                        avsrepo.SetPaths(false, new Paths() { Binaries = Avs32Paths.Plugin, Scripts = Avs32Paths.Script, Definitions = vspackages_file });
+                        avsrepo.SetPaths(false, new Paths() { Binaries = Avs32Paths.Plugin, Scripts = Avs32Paths.Script, Definitions = avspackages_file });
                     }
                     if (Avs64Paths != null)
                     {
-                        avsrepo.SetPaths(true, new Paths() { Binaries = Avs64Paths.Plugin, Scripts = Avs64Paths.Script, Definitions = vspackages_file });
+                        avsrepo.SetPaths(true, new Paths() { Binaries = Avs64Paths.Plugin, Scripts = Avs64Paths.Script, Definitions = avspackages_file });
                     }
                     CurrentPluginPath = avsrepo.paths[Win64].Binaries;
                     CurrentScriptPath = avsrepo.paths[Win64].Scripts;
