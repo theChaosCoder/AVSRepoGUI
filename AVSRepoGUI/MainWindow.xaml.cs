@@ -152,10 +152,20 @@ namespace AVSRepoGUI
 
             if (!found_avrespo_bin)
             {
-                MessageBox.Show("Can't find avsrepo.exe, avsrepo-32.exe or avsrepo-64.exe");
+                MessageBox.Show("Can't find avsrepo.exe, avsrepo-32.exe or avsrepo-64.exe", "AVSRepo not found");
+
+                if (MessageBox.Show("Open download page for avsrepo?", "AVSRepo not found", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                {
+                    Process.Start("https://github.com/theChaosCoder/avsrepo/releases");
+                }
                 System.Environment.Exit(1);
             }
 
+            if(!is7zipCallable())
+            {
+                MessageBox.Show("You need to either place 7z.exe & 7z.dll next to avsrepo.exe OR install 7zip and make sure it is in PATH", "7z.exe not found");
+                System.Environment.Exit(1);
+            }
 
             if (settings is null)
             {
@@ -170,6 +180,15 @@ namespace AVSRepoGUI
                 {
                     avsrepo.SetPaths(true, new Paths() { Binaries = Avs64Paths.Plugin, Scripts = Avs64Paths.Script, Definitions = avspackages_file });
                 }
+
+                //Quickfix: turns out that the paths command can't be run without a package definitions file :-(
+                if (!File.Exists(avspackages_file))
+                {
+                    avsrepo.Update();
+                }
+
+
+
                 //Trigger GetPaths for 32/64 bit, they are cached in VsApi class anyway
                 _ = avsrepo.GetPaths(true).Definitions; _ = avsrepo.GetPaths(false).Definitions;
             }
@@ -224,13 +243,13 @@ namespace AVSRepoGUI
              }
          }
 
-        private bool IsPythonCallable()
+        private bool is7zipCallable()
         {
             try
             {
                 Process p = new Process();
-                p.StartInfo.FileName = "python.exe";
-                p.StartInfo.Arguments = "-V";
+                p.StartInfo.FileName = "7z.exe";
+                p.StartInfo.Arguments = "";
                 p.StartInfo.UseShellExecute = false;
                 p.StartInfo.CreateNoWindow = true;
                 p.Start();
@@ -242,6 +261,8 @@ namespace AVSRepoGUI
                 return false;
             }
         }
+
+        
 
 
         public void AddChatter(AvsApi chatter)
