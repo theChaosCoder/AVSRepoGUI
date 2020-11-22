@@ -164,6 +164,11 @@ namespace AVSRepoGUI
             if(!is7zipCallable())
             {
                 MessageBox.Show("You need to either place 7z.exe & 7z.dll next to avsrepo.exe OR install 7zip and make sure it is in PATH", "7z.exe not found");
+                if (MessageBox.Show("Open 7z download page?", "7z.exe not found", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                {
+                    Process.Start("https://www.7-zip.org/download.html");
+                }
+            
                 System.Environment.Exit(1);
             }
 
