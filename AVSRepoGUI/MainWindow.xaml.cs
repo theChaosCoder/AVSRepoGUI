@@ -621,7 +621,8 @@ namespace AVSRepoGUI
                 }
                 await ReloadPluginsAsync();
             } 
-            else
+            
+            if (DiagnoseTab.IsSelected)
             {
                 AppIsWorking(true);
 
@@ -657,9 +658,9 @@ namespace AVSRepoGUI
                 tb.Inlines.Add(new Run("\n\nDuplicate Function Name Detection \n") { FontSize = 14 });
                 tb.Inlines.Add(new Run("------------------------------------------------------------\n") { Foreground = Brushes.SlateBlue });
                 tb.Inlines.Add("\nPath of *.avsi files: " + avsrepo.GetPaths(Win64).Scripts);
-                tb.Inlines.Add("\nFound " + script_dups.Count + " potential conflicts: \n");
                 if (script_dups.Count > 0)
                 {
+                    tb.Inlines.Add("\nFound " + script_dups.Count + " potential conflicts: \n");
                     foreach (var dup in script_dups)
                     {
                         tb.Inlines.Add("\nFunction name: ");
@@ -673,7 +674,7 @@ namespace AVSRepoGUI
                 }
                 else
                 {
-                    tb.Inlines.Add(new Run("\nNo duplicate functions found in *.avsi files") { FontWeight = FontWeights.Bold, Foreground = Brushes.Green });
+                    tb.Inlines.Add(new Run("\n\nNo duplicate functions found in *.avsi files") { FontWeight = FontWeights.Bold, Foreground = Brushes.Green });
                 }
 
                 ScrollViewer.Content = richtextbox;
