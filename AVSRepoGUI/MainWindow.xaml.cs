@@ -174,6 +174,11 @@ namespace AVSRepoGUI
 
             if (settings is null)
             {
+#if !DEBUG
+                TabablzControl.Items.RemoveAt(TabablzControl.Items.Count - 1);
+#endif
+
+
                 AppIsWorking(true);
                 avsrepo.SetArch(Environment.Is64BitOperatingSystem);
                 avspackages_file = Path.GetDirectoryName(Process.GetCurrentProcess().MainModule.FileName) + "\\avspackages.json"; // That means avsrepo.exe needs to be near avsrepogui
@@ -200,8 +205,9 @@ namespace AVSRepoGUI
             else // Portable mode, valid avsrepogui.json found
             {
                 //TabablzControl doesn't support hiding or collapsing Tabitems. Hide "Settings" (last) tab if we are in avisynth portable mode	
-                TabablzControl.Items.RemoveAt(TabablzControl.Items.Count - 1); 
-
+#if !DEBUG
+                TabablzControl.Items.RemoveAt(TabablzControl.Items.Count - 1);
+#endif
                 LabelPortable.Visibility = Visibility.Visible;
                 avsrepo.SetPortableMode(true);
                 avsrepo.python_bin = settings.Bin;
