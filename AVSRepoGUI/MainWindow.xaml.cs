@@ -527,7 +527,10 @@ namespace AVSRepoGUI
         }
         private void Hyperlink_RequestNavigate(object sender, System.Windows.Navigation.RequestNavigateEventArgs e)
         {
-            Process.Start(e.Uri.AbsoluteUri);
+            if (e.Uri.IsAbsoluteUri)
+            {
+                Process.Start(e.Uri.AbsoluteUri);
+            }
         }
 
         private void Hyperlink_Click_1(object sender, RoutedEventArgs e)
@@ -537,7 +540,10 @@ namespace AVSRepoGUI
 
         private void Hyperlink_open(object sender, System.Windows.Navigation.RequestNavigateEventArgs e)
         {
-            Process.Start(e.Uri.AbsoluteUri);
+            if (e.Uri.IsAbsoluteUri)
+            {
+                Process.Start(e.Uri.AbsoluteUri);
+            }
         }
 
         private void Hyperlink_namespace(object sender, System.Windows.Navigation.RequestNavigateEventArgs e)
