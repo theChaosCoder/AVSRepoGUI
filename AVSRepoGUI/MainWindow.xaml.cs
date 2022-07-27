@@ -72,7 +72,7 @@ namespace AVSRepoGUI
                 set
                 {
                     UpdateAvailable = Array.FindAll(value, c => c.Status == AvsApi.PluginStatus.UpdateAvailable);
-                    Installed =       Array.FindAll(value, c => c.Status == AvsApi.PluginStatus.Installed);
+                    Installed =       Array.FindAll(value, c => c.Status == AvsApi.PluginStatus.Installed || c.Status == AvsApi.PluginStatus.UpdateAvailable);
                     NotInstalled =    Array.FindAll(value, c => c.Status == AvsApi.PluginStatus.NotInstalled);
                     Unknown =         Array.FindAll(value, c => c.Status == AvsApi.PluginStatus.InstalledUnknown);
                     //Full =            value;
